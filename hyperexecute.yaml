@@ -1,0 +1,27 @@
+globalTimeout: 600
+concurrency: 2
+runson: ["win", "linux"]
+
+preRun:
+  - run: npm install # Install dependencies
+  - run: npx playwright install # Ensure Playwright browsers are installed
+
+env:
+  TEST_USERNAME: ${{ .secrets.TEST_USERNAME }}
+  TEST_PASSKEY: ${{ .secrets.TEST_PASSKEY }}
+
+secret-management:
+  secrets:
+    TEST_USERNAME: "richa_moonat"
+    TEST_PASSKEY: "5u1wJUZmI8MnaicoD15yqrBDAcAdCFCuhkBYGOV1oWCFQO5S6T"
+
+cacheKey: package-lock.json # Dependency caching
+
+testSuite:
+  - name: "Playwright Tests"
+    command: npx playwright test
+    runson: ["win", "linux"]
+
+reporting:
+  artifacts:
+    - test-results/ # Store reports, logs
